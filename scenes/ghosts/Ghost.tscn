@@ -1,0 +1,280 @@
+[gd_scene load_steps=19 format=3 uid="uid://cfpnja4nq0ogf"]
+
+[ext_resource type="Texture2D" uid="uid://bvymkf44mha1y" path="res://assets/tiles.png" id="1_gysem"]
+[ext_resource type="Script" path="res://scenes/ghosts/new_ghost.gd" id="1_iad4y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rh4gk"]
+atlas = ExtResource("1_gysem")
+region = Rect2(456, 64, 128, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hdneg"]
+radius = 7.0
+
+[sub_resource type="GDScript" id="GDScript_rhepw"]
+script/source = "extends Area2D
+
+@onready var ghost: Ghost = self.owner
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is PacMan:
+		print(\"pacman entered:\" , ghost.current_state)
+		if ghost.current_state == Ghost.states.SCARED:
+			ghost.die()
+		else:
+			body.die()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jkbho"]
+radius = 8.0
+
+[sub_resource type="Animation" id="Animation_cw18m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyColor:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CommonSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CommonSprite:frame_coords")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_g1iyl"]
+resource_name = "dead_down"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CommonSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(3, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_r3io6"]
+resource_name = "dead_left"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CommonSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8gmtk"]
+resource_name = "dead_right"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CommonSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bhnh7"]
+resource_name = "dead_up"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CommonSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(2, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xpknt"]
+resource_name = "move_down"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyColor:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_iq87c"]
+resource_name = "move_left"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyColor:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_vdceb"]
+resource_name = "move_right"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyColor:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_yid0u"]
+resource_name = "move_up"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyColor:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_y6usy"]
+resource_name = "scared"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CommonSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ja1qd"]
+_data = {
+"RESET": SubResource("Animation_cw18m"),
+"dead_down": SubResource("Animation_g1iyl"),
+"dead_left": SubResource("Animation_r3io6"),
+"dead_right": SubResource("Animation_8gmtk"),
+"dead_up": SubResource("Animation_bhnh7"),
+"move_down": SubResource("Animation_xpknt"),
+"move_left": SubResource("Animation_iq87c"),
+"move_right": SubResource("Animation_vdceb"),
+"move_up": SubResource("Animation_yid0u"),
+"scared": SubResource("Animation_y6usy")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lihm"]
+atlas = ExtResource("1_gysem")
+region = Rect2(584, 64, 64, 32)
+
+[node name="Ghost" type="CharacterBody2D" groups=["ghosts"]]
+collision_layer = 4
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_iad4y")
+
+[node name="BodyColor" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_rh4gk")
+hframes = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hdneg")
+
+[node name="PlayerDetect" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+script = SubResource("GDScript_rhepw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetect"]
+visible = false
+shape = SubResource("CircleShape2D_jkbho")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ja1qd")
+}
+
+[node name="CommonSprite" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("AtlasTexture_3lihm")
+hframes = 4
+vframes = 2
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 16.0
+path_postprocessing = 1
+avoidance_enabled = true
+debug_enabled = true
+debug_path_custom_line_width = 1.78
+
+[node name="ScaredTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="PlayerDetect" to="PlayerDetect" method="_on_body_entered"]
+[connection signal="timeout" from="ScaredTimer" to="." method="_on_scared_timer_timeout"]

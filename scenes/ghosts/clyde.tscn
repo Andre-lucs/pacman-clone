@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://db7qieye64fra"]
+
+[ext_resource type="PackedScene" uid="uid://cfpnja4nq0ogf" path="res://scenes/ghosts/Ghost.tscn" id="1_ceexp"]
+[ext_resource type="Texture2D" uid="uid://bvymkf44mha1y" path="res://assets/tiles.png" id="2_v0i78"]
+
+[sub_resource type="GDScript" id="GDScript_qjx1m"]
+script/source = "extends Ghost
+
+@onready var tile_size = Vector2(owner.get_node(\"WallsLayer\").tile_set.tile_size)
+
+func get_chase_target():
+	if global_position.distance_to(pacman.global_position) > (tile_size.length()*8):
+		return super() # posição do pacman
+	
+	return scatter_pos.global_position
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wffdf"]
+atlas = ExtResource("2_v0i78")
+region = Rect2(456, 112, 128, 16)
+
+[node name="Clyde" instance=ExtResource("1_ceexp")]
+script = SubResource("GDScript_qjx1m")
+
+[node name="BodyColor" parent="." index="0"]
+texture = SubResource("AtlasTexture_wffdf")

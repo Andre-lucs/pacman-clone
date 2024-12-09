@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv84dik8d45s"]
+
+[ext_resource type="PackedScene" uid="uid://cfpnja4nq0ogf" path="res://scenes/ghosts/Ghost.tscn" id="1_4ujlm"]
+[ext_resource type="Texture2D" uid="uid://bvymkf44mha1y" path="res://assets/tiles.png" id="2_wbqio"]
+
+[sub_resource type="GDScript" id="GDScript_15c87"]
+script/source = "extends Ghost
+
+@export var blinky : Ghost
+@onready var tile_size = Vector2(owner.get_node(\"WallsLayer\").tile_set.tile_size)
+
+# imagine an intermediate offset two tiles away from 
+# Pac-Man's tile in the direction Pac-Man is moving 
+# then draw a line from Blinky's tile to that offset. 
+# Now double the line length by extending the line out just as far again, 
+# and you will have Inky's target tile
+func get_chase_target():
+	var aheadPacman = pacman.global_position + pacman.direction*tile_size*2 # dois a frente do pacman
+	return aheadPacman + (blinky.global_position.direction_to(aheadPacman)*blinky.global_position.distance_to(aheadPacman))
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltpey"]
+atlas = ExtResource("2_wbqio")
+region = Rect2(456, 96, 128, 16)
+
+[node name="Inky" instance=ExtResource("1_4ujlm")]
+script = SubResource("GDScript_15c87")
+
+[node name="BodyColor" parent="." index="0"]
+texture = SubResource("AtlasTexture_ltpey")

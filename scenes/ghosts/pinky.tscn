@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhq4gwcsbc4wa"]
+
+[ext_resource type="PackedScene" uid="uid://cfpnja4nq0ogf" path="res://scenes/ghosts/Ghost.tscn" id="1_xal26"]
+[ext_resource type="Texture2D" uid="uid://bvymkf44mha1y" path="res://assets/tiles.png" id="2_od7bb"]
+
+[sub_resource type="GDScript" id="GDScript_os3tr"]
+script/source = "extends Ghost
+class_name Pinky
+
+# quatro celulas a frente da direção em que o pacman esta olhando
+func get_chase_target():
+	return pacman.global_position + pacman.direction*Vector2(game.walls.tile_set.tile_size)*4
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vylf"]
+atlas = ExtResource("2_od7bb")
+region = Rect2(456, 80, 128, 16)
+
+[node name="Pinky" instance=ExtResource("1_xal26")]
+script = SubResource("GDScript_os3tr")
+
+[node name="BodyColor" parent="." index="0"]
+texture = SubResource("AtlasTexture_5vylf")

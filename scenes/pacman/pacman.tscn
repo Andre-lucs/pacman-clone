@@ -1,0 +1,156 @@
+[gd_scene load_steps=22 format=3 uid="uid://cmfr4hmypsjrb"]
+
+[ext_resource type="Script" path="res://scenes/pacman/pacman.gd" id="1_dtalt"]
+[ext_resource type="Texture2D" uid="uid://bvymkf44mha1y" path="res://assets/tiles.png" id="2_rej4r"]
+[ext_resource type="AudioStream" uid="uid://c3a02bd7032ym" path="res://assets/sounds/wakka-wakka.mp3" id="3_rppum"]
+[ext_resource type="AudioStream" uid="uid://dahl16dtdjjw5" path="res://assets/sounds/pacman_death.wav" id="4_skkpi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibush"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(504, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsblq"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(520, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d573o"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(536, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kus8o"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(552, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh5dt"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(568, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m65q7"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(584, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ew8nt"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(600, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e52da"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(616, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oq14e"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(632, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ia2r2"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(648, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qn3p1"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(664, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgxf1"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(664, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iun4m"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(456, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjuge"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(472, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lpwom"]
+atlas = ExtResource("2_rej4r")
+region = Rect2(488, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s32mp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibush")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsblq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d573o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kus8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yh5dt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m65q7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ew8nt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e52da")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oq14e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ia2r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn3p1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgxf1")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iun4m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjuge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpwom")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjuge")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7f4mg"]
+
+[node name="Pacman" type="CharacterBody2D" groups=["player"]]
+collision_mask = 10
+motion_mode = 1
+script = ExtResource("1_dtalt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.6, 1.6)
+sprite_frames = SubResource("SpriteFrames_s32mp")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7f4mg")
+
+[node name="PickingCoinsTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="EatingSound" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("3_rppum")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("4_skkpi")
+
+[connection signal="timeout" from="PickingCoinsTimer" to="." method="_on_picking_coins_timer_timeout"]
