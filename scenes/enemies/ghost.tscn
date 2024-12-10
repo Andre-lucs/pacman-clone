@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpa3wavhx5d30"]
+
+[ext_resource type="Texture2D" uid="uid://dxsga5kq4capg" path="res://icon.svg" id="1_tftvp"]
+[ext_resource type="Script" path="res://scenes/enemies/ghost.gd" id="1_w3n56"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k00vn"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ur1j"]
+size = Vector2(70, 70)
+
+[node name="Ghost" type="CharacterBody2D"]
+script = ExtResource("1_w3n56")
+
+[node name="DetectPlayer" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectPlayer"]
+shape = SubResource("RectangleShape2D_k00vn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5ur1j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("1_tftvp")
+
+[connection signal="body_entered" from="DetectPlayer" to="." method="_on_area_2d_body_entered"]

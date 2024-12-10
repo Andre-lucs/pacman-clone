@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://blik86yentxaa"]
+
+[ext_resource type="Script" path="res://scenes/player/pacman.gd" id="1_smv7r"]
+[ext_resource type="Texture2D" uid="uid://dxsga5kq4capg" path="res://icon.svg" id="2_1jgpu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_13qc5"]
+size = Vector2(126, 126)
+
+[node name="Pacman" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_smv7r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1jgpu")
+region_rect = Rect2(2, 0, 48, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_13qc5")

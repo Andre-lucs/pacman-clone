@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=4 uid="uid://dmunnkb81l3ru"]
+
+[ext_resource type="PackedScene" uid="uid://blik86yentxaa" path="res://scenes/player/pacman.tscn" id="1_gnp4m"]
+[ext_resource type="Script" path="res://game.gd" id="1_ly3ud"]
+[ext_resource type="PackedScene" uid="uid://d33qwqvpi4vhs" path="res://scenes/objects/coin/coin.tscn" id="2_xj7j3"]
+[ext_resource type="PackedScene" uid="uid://vjo1q37hvhd5" path="res://scenes/objects/tpgate/tp_gate.tscn" id="5_gvnl4"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_7p8sf"]
+scenes/1/scene = ExtResource("2_xj7j3")
+
+[sub_resource type="TileSet" id="TileSet_08ely"]
+tile_size = Vector2i(48, 48)
+sources/0 = SubResource("TileSetScenesCollectionSource_7p8sf")
+
+[sub_resource type="LabelSettings" id="LabelSettings_y48ne"]
+font_size = 32
+
+[node name="Game" type="Node2D" groups=["game"]]
+script = ExtResource("1_ly3ud")
+
+[node name="Pacman" parent="." instance=ExtResource("1_gnp4m")]
+position = Vector2(460, 296)
+
+[node name="CoinMap" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAWABkAAAAAAAAAAQAGAAoAAAAAAAAAAQAHAAoAAAAAAAAAAQAKAAEAAAAAAAAAAQAHAAEAAAAAAAAAAQAGAAMAAAAAAAAAAQAGAAQAAAAAAAAAAQAGAAUAAAAAAAAAAQA=")
+tile_set = SubResource("TileSet_08ely")
+
+[node name="TpGate" parent="." node_paths=PackedStringArray("gate") instance=ExtResource("5_gvnl4")]
+position = Vector2(0, 316)
+gate = NodePath("../TpGate2")
+
+[node name="TpGate2" parent="." node_paths=PackedStringArray("gate") instance=ExtResource("5_gvnl4")]
+position = Vector2(800, 316)
+gate = NodePath("../TpGate")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Label" type="Label" parent="UI/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Score: 000"
+label_settings = SubResource("LabelSettings_y48ne")
+
+[connection signal="body_entered" from="CoinMap/Coin" to="CoinMap/Coin" method="_on_body_entered"]
+[connection signal="body_entered" from="CoinMap/@Area2D@43657" to="CoinMap/@Area2D@43657" method="_on_body_entered"]
+[connection signal="body_entered" from="CoinMap/@Area2D@43658" to="CoinMap/@Area2D@43658" method="_on_body_entered"]
+[connection signal="body_entered" from="CoinMap/@Area2D@43659" to="CoinMap/@Area2D@43659" method="_on_body_entered"]
+[connection signal="body_entered" from="CoinMap/@Area2D@43660" to="CoinMap/@Area2D@43660" method="_on_body_entered"]
+[connection signal="body_entered" from="CoinMap/@Area2D@43661" to="CoinMap/@Area2D@43661" method="_on_body_entered"]
+[connection signal="body_entered" from="CoinMap/@Area2D@43662" to="CoinMap/@Area2D@43662" method="_on_body_entered"]
+[connection signal="body_entered" from="CoinMap/@Area2D@43663" to="CoinMap/@Area2D@43663" method="_on_body_entered"]

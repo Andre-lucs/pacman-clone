@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://vjo1q37hvhd5"]
+
+[ext_resource type="Script" path="res://scenes/objects/tpgate/tp_gate.gd" id="1_jny86"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_japy4"]
+size = Vector2(20, 64)
+
+[node name="TpGate" type="Area2D"]
+script = ExtResource("1_jny86")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_japy4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
